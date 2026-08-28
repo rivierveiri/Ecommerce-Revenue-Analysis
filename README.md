@@ -4,7 +4,7 @@
 E-commerce businesses lose money when customers stop ordering or sign up without buying. I analyzed transaction logs using SQLite and Excel to find:
 1. High-value customers who became inactive.
 2. Users who signed up but never placed an order.
-3. Product performance and revenue rankings by category.
+3. Product performance and rankings by category.
 
 ## Dataset Structure
 Relational SQLite database using 4 tables: `Customers`, `Orders`, `OrderDetails`, and `Products`.
@@ -18,16 +18,16 @@ Relational SQLite database using 4 tables: `Customers`, `Orders`, `OrderDetails`
 
 ### 2. Users With No Orders
 * **Goal:** Track registered accounts with zero order history to improve onboarding.
-* **SQL Logic:** Used a `LEFT JOIN` between `Customers` and `Orders`, filtered using `Orders.OrderID IS NULL`.
+* **SQL Logic:** Used a `LEFT JOIN` between `Customers` and `Orders`, filtered using `o.OrderDate IS NULL`.
 * **Finding:** Found 20 registered users who never placed an order.
 
 ### 3. Product Category Rankings
 * **Goal:** Rank products by total sales within their respective categories.
-* **SQL Logic:** Applied `DENSE_RANK() OVER (PARTITION BY Category ORDER BY SUM(Revenue) DESC)`.
-* **Finding:** Electronics was the top category, led by MacBook Pro (₹6,00,000 in sales). Some items, like Cotton Bedsheets, recorded zero sales.
+* **SQL Logic:** Applied `DENSE_RANK() OVER (PARTITION BY p.Category ORDER BY SUM(p.Price * od.Quantity)  DESC)`.
+* **Finding:** Electronics was the top category, led by MacBook Pro (₹6,00,000 in sales). Some items like Cotton Bedsheet recorded zero sales.
 
 ## Excel Dashboard
 Exported SQL query results into Microsoft Excel to build a simple dashboard featuring:
-* **KPI Cards:** Created using `=SUMIF()` and `=COUNT()` formulas.
-* **Sales Charts:** 2D Column Charts powered by Pivot Tables.
-* **Interactive Slicers:** Added category slicers for easy filtering.
+* **KPI Cards:** Created using `=SUM()` and `=COUNT()` formulas.
+* **Sales Charts:** 2D Column Chart powered by Pivot Tables.
+* **Slicers:** Added category slicers for easy filtering.
