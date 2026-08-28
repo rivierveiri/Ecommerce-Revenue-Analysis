@@ -1,4 +1,4 @@
-# E-Commerce Sales & Customer Retention Analysis 
+# E-Commerce Revenue & Customer Retention Analysis 
 
 ## Problem Statement
 E-commerce businesses lose money when customers stop ordering or sign up without buying. I analyzed transaction logs using SQLite and Excel to find:
