@@ -13,21 +13,21 @@
 
 --Query 2: Unconverted Signups (Users With No Orders)
 
-  SELECT c.CustomerID, c.CustomerName
-  FROM Customers AS c
-  LEFT JOIN Orders AS o
-  ON c.CustomerID = o.CustomerID
-  WHERE o.OrderDate IS NULL
+ SELECT c.CustomerID, c.CustomerName
+ FROM Customers AS c
+ LEFT JOIN Orders AS o
+ ON c.CustomerID = o.CustomerID
+ WHERE o.OrderDate IS NULL
 
 --Query 3: Category Product Ranking
 
-   SELECT p.Category, p.ProductName
-   SUM(p.Price * od.Quantity) AS Total_Revenue
-   DENSE_RANK() OVER ( PARTITION BY p.Category ORDER BY SUM(p.Price * od.Quantity) DESC) AS Product_Ranking
-   FROM Products AS p
-   LEFT JOIN OrderDetails AS od
-   ON p.ProductID = od.ProductID
-   GROUP BY p.Category, p.ProductName
+ SELECT p.Category, p.ProductName,
+ SUM(p.Price * od.Quantity) AS Total_Revenue,
+ DENSE_RANK() OVER ( PARTITION BY p.Category ORDER BY SUM(p.Price * od.Quantity) DESC) AS Product_Ranking
+ FROM Products AS p
+ LEFT JOIN OrderDetails AS od
+ ON p.ProductID = od.ProductID
+ GROUP BY p.Category, p.ProductName
    
 
    
